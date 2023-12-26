@@ -1,5 +1,4 @@
 import os
-import sys
 import logging
 from datetime import datetime
 
@@ -8,12 +7,12 @@ Log_path = os.path.join(os.getcwd(),'logs',LOGS_FILE)
 
 os.makedirs(Log_path,exist_ok=True)
 
-LOG_FILE_PATH = os.path.join(LOGS_FILE,Log_path)
+LOG_FILE_PATH = os.path.join(Log_path,LOGS_FILE)
 
 logging.basicConfig(
-    name = LOG_FILE_PATH,
-    format= "[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
-    level= logging.INFO
+    filename = LOG_FILE_PATH,
+    format = "[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
+    level = logging.INFO
 )
 
 logging.info('Logging has started')
