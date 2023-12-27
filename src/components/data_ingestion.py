@@ -9,6 +9,12 @@ from dataclasses import dataclass
 from src.components.data_cleaning import DataCleaningConfig
 from src.components.data_cleaning import DataCleaning
 
+from src.components.outliers import OutliersRemovalConfig
+from src.components.outliers import OutliersRemoval
+
+from src.components.data_transformation import DataTransformationConfig
+from src.components.data_transformation import DataTransformation
+
 @dataclass 
 class DataIngestionConfig:
     raw_data_path = os.path.join('data','raw','raw_data.csv')
@@ -40,4 +46,10 @@ if __name__ == "__main__":
     raw_data_path = obj.initiate_model_trainer()
 
     data_cleaner = DataCleaning()
-    data_cleaner.initiate_data_cleaning(raw_data_path)
+    clean_data_path = data_cleaner.initiate_data_cleaning(raw_data_path)
+
+    outliear_removal = OutliersRemoval()
+    data_path = outliear_removal.initiate_outliers_removal(clean_data_path)
+
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(data_path)

@@ -3,6 +3,7 @@ import sys
 import pandas as pd 
 import numpy as np 
 from src.logger import logging
+import pickle
 
 from src.exception import CustomException
 
@@ -52,7 +53,70 @@ def loc_to_others(data):
     except Exception as e:
         logging.error(f"Exception occured : {e}")
         raise CustomException(e,sys)
+    
+def remove_outliers(data):
+    try:
+        df = pd.DataFrame()
+        for key,subdf in data.groupby('location'):
+            m = subdf['price_per_sqft'].mean()
+            std = subdf['price_per_sqft'].std()
+            reduced_df = subdf[(subdf['price_per_sqft']>=(m-std)) & (subdf['price_per_sqft']<=(m+std))]
+            df = pd.concat([df,reduced_df],ignore_index=True)
+        return df
+    except Exception as e:
+        logging.error(f"Exception occured : {e}")
+        raise CustomException(e,sys)
+    
+def remove_bhk_outliers(data):
+    try:
+        exclude_indices = np.array([])
+        for loc,loc_df in data.groupby('location'):
+            bhk_stats = loc_df.groupby('size').apply(cal_stats).to_dict()
+            for bhk,bhk_df in loc_df.groupby('size'):
+                stats = bhk_stats.get(bhk-1)
+                if stats and stats['count']>5:
+                    exclude_indices = np.append(exclude_indices, bhk_df[bhk_df['price_per_sqft'] < stats['mean']].index.values)
+        return data.drop(exclude_indices, axis='index')
+
+    except Exception as e:
+        logging.error(f'Exception occured : {e}')
+        raise CustomException(e,sys)
+    
+def cal_stats(data):
+        return {
+        'mean': np.mean(data['price_per_sqft']),
+        'std': np.std(data['price_per_sqft']),
+        'count': data.shape[0]
+    }
+
+def get_columns(data,target_column):
+    try:
+        num_columns = []
+        cat_columns = []
+        for x in data.columns:
+            if x == target_column:
+                pass
+            else:
+                if data[x].dtype == "O":
+                    cat_columns.append(x)
+                else:
+                    num_columns.append(x)
+
+        return num_columns,cat_columns
+    
+    except Exception as e:
+        raise CustomException(e,sys)
+    
+def save_obj(file_path,obj):
+    try:
+        dir_name = os.path.dirname(file_path)
+        os.makedirs(dir_name,exist_ok=True)
+
+        with open(file_path , 'wb') as file_obj:
+            pickle.dump(obj,file_obj)
         
+    except Exception as e:
+        raise CustomException(e,sys)
 
         
     

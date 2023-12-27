@@ -26,6 +26,7 @@ class DataCleaning:
             df = keep_required_columns(df,columns_to_keep)
 
             df.dropna(inplace=True)
+            df.drop_duplicates(inplace=True)
 
             df = extract_bhk(df)
 
