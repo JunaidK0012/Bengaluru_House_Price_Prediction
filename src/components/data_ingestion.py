@@ -15,6 +15,9 @@ from src.components.outliers import OutliersRemoval
 from src.components.data_transformation import DataTransformationConfig
 from src.components.data_transformation import DataTransformation
 
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer 
+
 @dataclass 
 class DataIngestionConfig:
     raw_data_path = os.path.join('data','raw','raw_data.csv')
@@ -52,4 +55,8 @@ if __name__ == "__main__":
     data_path = outliear_removal.initiate_outliers_removal(clean_data_path)
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(data_path)
+    X_train,X_test,y_train,y_test = data_transformation.initiate_data_transformation(data_path)
+
+    model_trainer = ModelTrainer()
+    model_trainer.initiate_model_trainer(X_train,X_test,y_train,y_test)
+

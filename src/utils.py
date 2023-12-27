@@ -3,7 +3,7 @@ import sys
 import pandas as pd 
 import numpy as np 
 from src.logger import logging
-import pickle
+import joblib
 
 from src.exception import CustomException
 
@@ -112,8 +112,7 @@ def save_obj(file_path,obj):
         dir_name = os.path.dirname(file_path)
         os.makedirs(dir_name,exist_ok=True)
 
-        with open(file_path , 'wb') as file_obj:
-            pickle.dump(obj,file_obj)
+        joblib.dump(obj,file_path)
         
     except Exception as e:
         raise CustomException(e,sys)
