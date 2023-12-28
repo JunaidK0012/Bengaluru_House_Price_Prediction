@@ -30,17 +30,19 @@ class ModelTrainer:
 
             cv = ShuffleSplit(n_splits=5, test_size=0.2)
             result = {}
+            best_model = None
+            best_score = 0
             for model_name,model in models.items():
                 grid_search = GridSearchCV(estimator=model,param_grid=parameters[model_name],cv=cv,n_jobs=-1, verbose=1)
                 grid_search.fit(X_train,y_train)
 
                 best_params = grid_search.best_params_
 
-                best_model = model.set_params(**best_params)
+                current_model = model.set_params(**best_params)
 
-                best_model.fit(X_train,y_train)
+                current_model.fit(X_train,y_train)
 
-                score = best_model.score(X_test,y_test)
+                score = current_model.score(X_test,y_test)
 
                 result[model_name]=score
           
@@ -48,12 +50,14 @@ class ModelTrainer:
                 print(f'The best hyperparameters for {model_name} are: {best_params}')
                 print(f'The accuracy of the {model_name} model is: {score}')
 
-                del best_model
+                if score > best_score:
+                    best_score = score
+                    best_model = current_model
 
             print(result)
 
-            final_model = LinearRegression()
-            final_model.fit(X_train,y_train)
+            logging.info(f'The model with the highest score is = {best_model} : {best_score}')
+            final_model = best_model.fit(X_train,y_train)
 
             save_obj(self.model_trainer_config.model_obj_path,final_model)
 
