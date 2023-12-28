@@ -10,7 +10,8 @@ from src.utils import save_obj
  
 from sklearn.linear_model import LinearRegression,Lasso,Ridge
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV,ShuffleSplit
+from sklearn.model_selection import GridSearchCV,ShuffleSplit,cross_val_score
+
 
 
 @dataclass
@@ -58,7 +59,7 @@ class ModelTrainer:
 
             logging.info("Model Training is completed.")
 
-            return self.model_trainer_config.model_obj_path
+            return self.model_trainer_config.model_obj_path,X_test,y_test
              
                 
         except Exception as e:
@@ -82,16 +83,16 @@ class ModelTrainer:
                 'fit_intercept': [True, False]
                 },
             'Lasso': {
-                'alpha': [0.1,1.0],
+                'alpha': [0.1,0.5],
                 'fit_intercept': [True, False],
                 'selection': ['cyclic', 'random']  
                 },
             'Ridge': {
-                'alpha': [0.3,0.4, 0.5],
+                'alpha': [0.6,0.4, 0.5],
                 'fit_intercept': [True, False]
                 },
             'Random Forest Regressor': {
-                'n_estimators': [11,10],
-                'min_samples_split': [10,11,12,13]   
+                'n_estimators': [15,18,20],
+                'min_samples_split': [18,20]   
                 }
         }

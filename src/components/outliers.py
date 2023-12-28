@@ -17,7 +17,7 @@ class OutliersRemoval:
         self.outliers_removal_config = OutliersRemovalConfig
 
     def initiate_outliers_removal(self,clean_data_path):
-        logging.info("Entered the outlier removal method.")
+        logging.info("Entered the outlier removal component.")
         try:
             df = pd.read_csv(clean_data_path)
             df['price_per_sqft'] = df['price']*100000/df['total_sqft']

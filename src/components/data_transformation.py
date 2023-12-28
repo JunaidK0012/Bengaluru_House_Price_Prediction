@@ -11,6 +11,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder,StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 
 @dataclass 
 class DataTransformationConfig:
@@ -24,12 +25,14 @@ class DataTransformation:
         try:
             cat_pipeline = Pipeline(
                 steps=[
+                    ('imputer',SimpleImputer(strategy='most_frequent')),
                     ('encoder',OneHotEncoder(handle_unknown='ignore'))
                 ]
             )
 
             num_pipeline = Pipeline(
                 steps=[
+                    ('imputer',SimpleImputer(strategy='median')),
                     ('scaler',StandardScaler())
                 ]
             )
@@ -49,11 +52,12 @@ class DataTransformation:
         
 
     def initiate_data_transformation(self,data_path):
-        logging.info("Entered the data transformation method.")
+        logging.info("Entered the data transformation component.")
         try:
             df = pd.read_csv(data_path)
             target_column = 'price'
             num_columns,cat_columns = get_columns(df,target_column)
+            print(num_columns,cat_columns)
             preprocessor = self.get_preprocessor_obj(cat_columns,num_columns)
 
             X = df.drop([target_column],axis='columns')

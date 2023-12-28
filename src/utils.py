@@ -108,6 +108,7 @@ def get_columns(data,target_column):
         raise CustomException(e,sys)
     
 def save_obj(file_path,obj):
+    """Saves the model at the given path."""
     try:
         dir_name = os.path.dirname(file_path)
         os.makedirs(dir_name,exist_ok=True)
@@ -115,6 +116,14 @@ def save_obj(file_path,obj):
         joblib.dump(obj,file_path)
         
     except Exception as e:
+        raise CustomException(e,sys)
+
+def load_model(model_obj_path):
+    """Loads the model from the given path."""
+    try:
+        return joblib.load(model_obj_path)
+    except Exception as e:
+        logging.error(f"Error loading model: {e}")
         raise CustomException(e,sys)
 
         

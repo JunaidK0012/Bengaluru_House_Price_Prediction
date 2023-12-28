@@ -17,11 +17,12 @@ class DataCleaning:
         self.data_cleaning_config = DataCleaningConfig()
 
     def initiate_data_cleaning(self,raw_data_path):
+        logging.info("Entered the data cleaning component.")
         try:
             
             df = pd.read_csv(raw_data_path)
 
-            columns_to_keep =['location', 'size','total_sqft', 'bath', 'price']
+            columns_to_keep =['area_type','balcony','location', 'size','total_sqft', 'bath', 'price']
 
             df = keep_required_columns(df,columns_to_keep)
 
