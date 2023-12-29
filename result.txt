@@ -1,4 +1,4 @@
 Evaluation metrics results: 
-Mean Squared Error: 713.47
+Mean Squared Error: 684.74
 R-squared Score: 0.89
-Mean Absolute Error: 15.37
+Mean Absolute Error: 14.93

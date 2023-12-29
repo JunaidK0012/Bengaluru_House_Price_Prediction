@@ -25,6 +25,7 @@ class OutliersRemoval:
             df = df[df['total_sqft']/df['size']>300]          #a single bedroom should have a minimum of 300 sqft.
             df = remove_outliers(df)
             df = df[df['bath']<=df['size']+1]
+            df = df[df['balcony']<=df['size']+1]
             df = remove_bhk_outliers(df)
 
             df.drop(['price_per_sqft'],axis='columns',inplace=True)
