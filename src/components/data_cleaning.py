@@ -22,7 +22,7 @@ class DataCleaning:
             
             df = pd.read_csv(raw_data_path)
 
-            columns_to_keep =['area_type','balcony','location', 'size','total_sqft', 'bath', 'price']
+            columns_to_keep =['location','total_sqft','size','area_type','balcony','bath', 'price']
 
             df = keep_required_columns(df,columns_to_keep)
 

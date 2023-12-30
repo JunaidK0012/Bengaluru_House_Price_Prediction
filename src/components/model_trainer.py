@@ -1,7 +1,6 @@
 import os 
 import sys
-import pandas as pd 
-import numpy as np 
+
 
 from src.exception import CustomException
 from src.logger import logging
@@ -10,7 +9,7 @@ from src.utils import save_obj
  
 from sklearn.linear_model import LinearRegression,Lasso,Ridge
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV,ShuffleSplit,cross_val_score
+from sklearn.model_selection import GridSearchCV,ShuffleSplit
 
 
 

@@ -1,13 +1,11 @@
 import os 
 import sys 
-import pandas as pd 
-import numpy as np 
-import joblib
+
 from src.exception import CustomException
 from src.logger import logging 
 from dataclasses import dataclass
 from sklearn.metrics import mean_absolute_error,mean_squared_error,r2_score
-from src.utils import load_model
+from src.utils import load_obj
 
 @dataclass
 class ModelEvaluationConfig:
@@ -20,7 +18,7 @@ class ModelEvaluation:
     def initiate_model_evaluation(self,model_obj_path,X_test,y_test):
         logging.info("Starting the model evaluation.")
         try:
-            model = load_model(model_obj_path)
+            model = load_obj(model_obj_path)
             y_pred = model.predict(X_test)
             mae = mean_absolute_error(y_test,y_pred)
             mse = mean_squared_error(y_test,y_pred)

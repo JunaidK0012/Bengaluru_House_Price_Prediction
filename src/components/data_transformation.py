@@ -42,7 +42,7 @@ class DataTransformation:
                 ('cat_pipeline',cat_pipeline,cat_columns)
             ],remainder='passthrough')
 
-            save_obj(self.data_transformation_config.preprocessor_obj_path,preprocessor_obj)
+            
 
             return preprocessor_obj
             
@@ -71,6 +71,8 @@ class DataTransformation:
 
             X_train = preprocessor.fit_transform(X_train)
             X_test = preprocessor.transform(X_test)
+
+            save_obj(self.data_transformation_config.preprocessor_obj_path,preprocessor)
 
             logging.info("Data transformation is completed.")
             
