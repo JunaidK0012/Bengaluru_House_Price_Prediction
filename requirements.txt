@@ -2,4 +2,6 @@ pandas
 numpy
 scikit-learn
 flask
+matplotlib
+gunicorn
 #-e .

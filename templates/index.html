@@ -15,9 +15,10 @@
         }
 
         header {
-            background-color: #004e98;
+            
             color: #fff;
             padding: 1em;
+            background: linear-gradient(to right, #004e98, #2a91ff);
         }
 
         h1 {
@@ -36,20 +37,37 @@
             color: #555;
         }
 
+
         button {
-            display: inline-block;
-            margin-top: 100px;
-            padding: 15px 30px; /* Increased padding for a larger button */
-            font-size: 1.2em; /* Increased font size for better readability */
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            background-color: #34a853;
-            color: #fff;
+            /* Basic button styling */
+            
+            margin: 30px;
+            padding: 20px;
+            font-size: 16px;
+            color: white;
+            font-size: 2em;
+            background: linear-gradient(to right, #007BFF, #00C6FF);
+            /* Blue gradient */
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+
+            /* Rounded corners */
+            border-radius: 50px;
+
+            /* Add a drop shadow */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+
+            /* Add a transition effect for the hover state */
+            transition: all 0.3s ease 0s;
+        }
+
+        /* Change the background color and scale up the button on hover */
+        button:hover {
+            background: linear-gradient(to right, #00C6FF, #007BFF);
+            /* Reverse gradient */
+            box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+            color: #fff;
+            transform: translateY(-7px);
         }
 
         button:hover {

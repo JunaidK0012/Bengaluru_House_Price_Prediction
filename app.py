@@ -1,9 +1,10 @@
 from flask import Flask,render_template,request
 import pandas as pd
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
+import os
 
 app = Flask(__name__)
-df = pd.read_csv('data\\processed\\data_without_outliers.csv')
+df = pd.read_csv(os.path.join('notebook', 'data', 'Bengaluru_House_Data.csv'))
 locations = df['location'].unique().tolist()
 @app.route('/')
 def start():
@@ -38,4 +39,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80)

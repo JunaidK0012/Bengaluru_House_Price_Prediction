@@ -1,11 +1,15 @@
 import os 
 import sys
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 from src.exception import CustomException
 from src.logger import logging
 from dataclasses import dataclass
 from src.utils import save_obj
+from sklearn.metrics import mean_absolute_error,mean_squared_error,r2_score
+
  
 from sklearn.linear_model import LinearRegression,Lasso,Ridge
 from sklearn.ensemble import RandomForestRegressor
@@ -32,7 +36,7 @@ class ModelTrainer:
             best_model = None
             best_score = 0
             for model_name,model in models.items():
-                grid_search = GridSearchCV(estimator=model,param_grid=parameters[model_name],cv=cv,n_jobs=-1, verbose=1)
+                grid_search = GridSearchCV(estimator=model,param_grid=parameters[model_name],cv=cv,n_jobs=-1, verbose=2)
                 grid_search.fit(X_train,y_train)
 
                 best_params = grid_search.best_params_
@@ -57,6 +61,8 @@ class ModelTrainer:
 
             logging.info(f'The model with the highest score is = {best_model} : {best_score}')
             final_model = best_model.fit(X_train,y_train)
+            
+
 
             save_obj(self.model_trainer_config.model_obj_path,final_model)
 
@@ -87,15 +93,18 @@ class ModelTrainer:
                 },
             'Lasso': {
                 'alpha': [0.1,0.5],
-                'fit_intercept': [True, False],
-                'selection': ['cyclic', 'random']  
+                'fit_intercept': [True, False]
                 },
             'Ridge': {
-                'alpha': [0.6,0.4, 0.5],
+                'alpha': [0.6],
                 'fit_intercept': [True, False]
                 },
             'Random Forest Regressor': {
-                'n_estimators': [15,18,20],
-                'min_samples_split': [18,20]   
+                'n_estimators': [20,25,30],  # Number of trees in the forest
+                'max_depth': [None, 10, 20, 30, 40, 50],  # Maximum depth of the tree
+                'min_samples_split': [2, 5, 10],  # Minimum number of samples required to split an internal node
+                'min_samples_leaf': [1, 2, 4],  # Minimum number of samples required to be at a leaf node
+                'max_features': ['auto', 'sqrt'],  # Number of features to consider when looking for the best split
+                'bootstrap': [True, False]  
                 }
         }

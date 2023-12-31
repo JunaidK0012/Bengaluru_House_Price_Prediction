@@ -63,6 +63,7 @@ class DataTransformation:
             X = df.drop([target_column],axis='columns')
             y = df[target_column]
 
+
             del df
 
             X_train,X_test,y_train,y_test = train_test_split(X,y,train_size=0.8,random_state=42)

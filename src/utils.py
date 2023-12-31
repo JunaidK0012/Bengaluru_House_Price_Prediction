@@ -75,7 +75,7 @@ def remove_bhk_outliers(data):
             for bhk,bhk_df in loc_df.groupby('size'):
                 stats = bhk_stats.get(bhk-1)
                 if stats and stats['count']>5:
-                    exclude_indices = np.append(exclude_indices, bhk_df[bhk_df['price_per_sqft'] < stats['mean']].index.values)
+                    exclude_indices = np.append(exclude_indices, bhk_df[bhk_df['price_per_sqft'] <= stats['mean']].index.values)
         return data.drop(exclude_indices, axis='index')
 
     except Exception as e:

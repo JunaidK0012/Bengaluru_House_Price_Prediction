@@ -19,6 +19,7 @@ class PredictPipeline:
         preprocessed_data = preprocessor.transform(data)
         score = model.predict(preprocessed_data)
 
+
         return np.around(score, decimals=2)
 
 
