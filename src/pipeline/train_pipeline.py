@@ -1,4 +1,5 @@
 import sys
+import os
 from src.logger import logging
 from src.exception import CustomException
 from src.components.data_ingestion import DataIngestion 
@@ -7,11 +8,11 @@ from src.components.outliers import OutliersRemoval
 from src.components.data_transformation import DataTransformation
 from src.components.model_evaluation import ModelEvaluation
 from src.components.model_trainer import ModelTrainer
-
+# create a DataIngestion object, you can specify the file path.
 def main():
     logging.info("Entered the training pipeline.")
     try:
-        data_ingestion = DataIngestion()
+        data_ingestion = DataIngestion(os.path.join('notebook','data','Bengaluru_House_Data.csv'))
         data_cleaning = DataCleaning()
         data_transformation = DataTransformation()
         outlier_removal = OutliersRemoval()

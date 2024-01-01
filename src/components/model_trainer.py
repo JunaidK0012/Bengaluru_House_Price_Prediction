@@ -104,7 +104,7 @@ class ModelTrainer:
                 'max_depth': [None, 10, 20, 30, 40, 50],  # Maximum depth of the tree
                 'min_samples_split': [2, 5, 10],  # Minimum number of samples required to split an internal node
                 'min_samples_leaf': [1, 2, 4],  # Minimum number of samples required to be at a leaf node
-                'max_features': ['auto', 'sqrt'],  # Number of features to consider when looking for the best split
+                'max_features': ['sqrt'],  # Number of features to consider when looking for the best split
                 'bootstrap': [True, False]  
                 }
         }
