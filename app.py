@@ -1,7 +1,8 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,jsonify
 import pandas as pd
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
 import os
+import numpy as np
 
 app = Flask(__name__)
 df = pd.read_csv(os.path.join('notebook', 'data', 'Bengaluru_House_Data.csv'))
@@ -37,6 +38,21 @@ def predict():
         return render_template('predict.html',locations = locations,result=score[0])
     
 
+@app.route('/api', methods=['POST'])
+def api():
+    data = request.get_json(force=True)
+
+    df = pd.DataFrame([data])
+
+    predict_pipeline = PredictPipeline()
+
+    score = predict_pipeline.predict_price(df)
+
+    output = score[0]
+
+    return jsonify({'output': output})
+
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(debug=True,host='0.0.0.0', port=80)
