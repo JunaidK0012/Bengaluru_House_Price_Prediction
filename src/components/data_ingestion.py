@@ -12,12 +12,25 @@ from dataclasses import dataclass
 
 @dataclass 
 class DataIngestionConfig:
-    raw_data_path : str = os.path.join('data','raw','raw_data.csv')
+    """
+    A data class that holds configuration information for the data ingestion process.
+
+    Attributes:
+        file_path (str): The path from where the raw data will be taken.
+        raw_data_path (str): The path where the raw data will stored.
+    """
+    file_path : str
+    raw_data_path : str 
 
 class DataIngestion:
-    def __init__(self,file_path : str):
-        self.DataIngestionConfig = DataIngestionConfig()
-        self.file_path = file_path
+    """
+    A class used to ingest data.
+
+    Attributes:
+        config (DataIngestionCOnfig): The configuration information for the data ingestion process.
+    """
+    def __init__(self,config : DataIngestionConfig):
+        self.config = config
 
     def initiate_data_ingestion(self):
         """
@@ -30,10 +43,10 @@ class DataIngestion:
         logging.info("Entered the data ingestion component.")
         try:
             # Check if the file exists
-            if not os.path.isfile(self.file_path):
+            if not os.path.isfile(self.config.file_path):
                 raise FileNotFoundError("The file does not exist.")
             
-            df = pd.read_csv(self.file_path)
+            df = pd.read_csv(self.config.file_path)
 
             # Check if the file is not empty
             if df.empty:
@@ -44,12 +57,12 @@ class DataIngestion:
             if not set(expected_columns).issubset(df.columns):
                 raise ValueError("The file does not have the expected columns.")
 
-            os.makedirs(os.path.dirname(self.DataIngestionConfig.raw_data_path),exist_ok=True)
-            df.to_csv(self.DataIngestionConfig.raw_data_path,index=False)
+            os.makedirs(os.path.dirname(self.config.raw_data_path),exist_ok=True)
+            df.to_csv(self.config.raw_data_path,index=False)
 
             logging.info("Data Ingestion is completed.")
 
-            return self.DataIngestionConfig.raw_data_path
+            return self.config.raw_data_path
             
         except Exception as e:
             logging.error(f"Exception occurred: {type(e).__name__}, {str(e)}")

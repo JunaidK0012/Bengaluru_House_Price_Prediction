@@ -9,12 +9,25 @@ from src.utils import load_obj
 
 
 class PredictPipeline:
-    def predict_price(self,data):
-        model_path = os.path.join('model','model.pkl')
-        preprocessor_path = os.path.join('model','preprocessor.pkl')
+    """
+    This class is used to predict the price using a pre-trained model
+    """
+    def __init__(self):
+        self.model_path = os.path.join('model','model.pkl')
+        self.preprocessor_path = os.path.join('model','preprocessor.pkl')     
 
-        model = load_obj(model_path)
-        preprocessor = load_obj(preprocessor_path)
+    def predict_price(self,data):
+        """
+        Predict the price based on input data.
+
+        Parameters:
+            data(DataFrame): The input data for prediction. 
+
+        Returns: 
+            np.array : The predicted price.
+        """
+        model = load_obj(self.model_path)
+        preprocessor = load_obj(self.preprocessor_path)
 
         preprocessed_data = preprocessor.transform(data)
         score = model.predict(preprocessed_data)
@@ -25,6 +38,9 @@ class PredictPipeline:
 
 
 class CustomData:
+    """
+    This class is used to create a custom data object.
+    """
     def __init__(self,location,total_sqft,size,area_type,balcony,bath):
         self.location = location
         self.total_sqft = total_sqft
@@ -34,6 +50,12 @@ class CustomData:
         self.bath = bath 
 
     def get_data_as_dataframe(self):
+        """
+        Convert the custom data object to a DataFrame.
+
+        Returns:
+            DataFrame : The DataFrame representation of the custom data object.
+        """
         try:
             data_to_dict = {
                 'location' : [self.location],
@@ -43,10 +65,14 @@ class CustomData:
                 'balcony' : [self.balcony],
                 'bath' : [self.bath]
             }
+        
 
             return pd.DataFrame(data_to_dict)
 
-         
+            
 
         except Exception as e:
+            logging.error(f"An error occurred during the predicting pipeline: {e}")
             raise CustomException(e,sys)
+        
+

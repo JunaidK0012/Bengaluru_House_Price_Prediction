@@ -17,7 +17,7 @@ class OutliersRemovalConfig:
         data_without_outliers_path (str): The path where the cleaned data without outliers will be stored.
         clean_data_path (str): The path where the cleaned data is located.
     """
-    data_without_outliers_path : str = os.path.join('data','processed','data_without_outliers.csv')
+    data_without_outliers_path : str 
     clean_data_path : str
 
 class OutliersRemoval:

@@ -17,7 +17,7 @@ class DataCleaningConfig:
         cleaned_data_path (str): The path where the cleaned data will be stored.
         raw_data_path (str): The path where the raw data is located.
     """
-    cleaned_data_path : str = os.path.join('data','processed','clean_data.csv')
+    cleaned_data_path : str 
     raw_data_path : str 
 
 class DataCleaning:

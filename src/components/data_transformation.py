@@ -15,13 +15,38 @@ from sklearn.impute import SimpleImputer
 
 @dataclass 
 class DataTransformationConfig:
-    preprocessor_obj_path = os.path.join('model','preprocessor.pkl')
+    """
+    A data class that holds configuration information for the data transformation process.
+
+    Attributes:
+        preprocessor_obj_path (str): The path where the preprocessor object will be stored.
+        data_path (str): The path where the cleaned data without outliers is located.
+    """
+    preprocessor_obj_path : str 
+    data_path : str
 
 class DataTransformation:
-    def __init__(self):
-        self.data_transformation_config = DataTransformationConfig
+    """
+    A class used for data transformation.
 
-    def get_preprocessor_obj(self,cat_columns,num_columns):
+    Attributes:
+        config (DataTransformationConfig): The configuration information for the data cleaning process.
+    """
+
+    def __init__(self,config:DataTransformationConfig):
+        self.config = config
+
+    def get_preprocessor_obj(self,cat_columns : list[str] ,num_columns : list[str]):
+        """
+        The function to get the preprocessor object.
+
+        Parameters:
+            cat_columns (list) : List of categorical columns.
+            num_columns (list) : List of numerical columns.
+
+        Returns:
+            preprocessor_obj (ColumnTransformer) : The preprocessor object.
+        """
         try:
             cat_pipeline = Pipeline(
                 steps=[
@@ -51,17 +76,25 @@ class DataTransformation:
             raise CustomException(e,sys)
         
 
-    def initiate_data_transformation(self,data_path):
+    def initiate_data_transformation(self):
+        """
+        The function to initiate the data transformation process.
+
+        Returns:
+            X_train, X_test, y_train, y_test (ndarray) : Transformed training and test sets.
+           
+        """
         logging.info("Entered the data transformation component.")
         try:
-            df = pd.read_csv(data_path)
+            df = pd.read_csv(self.config.data_path)
             target_column = 'price'
+
             num_columns,cat_columns = get_columns(df,target_column)
-            print(num_columns,cat_columns)
+            
             preprocessor = self.get_preprocessor_obj(cat_columns,num_columns)
 
-            X = df.drop([target_column],axis='columns')
-            y = df[target_column]
+            X = df.drop([target_column],axis='columns')    #Input Features
+            y = df[target_column]                          #Target Variable
 
 
             del df
@@ -73,12 +106,12 @@ class DataTransformation:
             X_train = preprocessor.fit_transform(X_train)
             X_test = preprocessor.transform(X_test)
 
-            save_obj(self.data_transformation_config.preprocessor_obj_path,preprocessor)
+            save_obj(self.config.preprocessor_obj_path,preprocessor)
 
             logging.info("Data transformation is completed.")
             
             return X_train,X_test,y_train,y_test
                 
         except Exception as e:
-            logging.error(f"An error occurred during the data transformation process: {e}")
+            logging.error(f"Exception occurred: {type(e).__name__}, {str(e)}")
             raise CustomException(e,sys)
