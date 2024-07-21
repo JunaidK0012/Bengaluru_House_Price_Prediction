@@ -15,7 +15,7 @@ This project aims to predict house prices in Bengaluru using machine learning te
 ## Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/bengaluru-house-price-prediction.git
+    git clone https://github.com/JunaidK0012/Bengaluru_House_Price_Prediction.git
     ```
 2. Navigate to the project directory:
     ```bash
