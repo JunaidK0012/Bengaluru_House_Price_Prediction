@@ -3,6 +3,10 @@
 ## Description
 This project aims to predict house prices in Bengaluru using machine learning techniques. The model is trained on various features such as location, size, and amenities of houses to provide accurate price predictions.
 
+
+https://github.com/user-attachments/assets/cef82f89-1022-484d-a03b-201fc81367bb
+
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
