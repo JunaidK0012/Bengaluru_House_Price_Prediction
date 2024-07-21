@@ -8,9 +8,6 @@ This project aims to predict house prices in Bengaluru using machine learning te
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 ## Installation
 1. Clone the repository:
@@ -46,4 +43,42 @@ This project aims to predict house prices in Bengaluru using machine learning te
     ```
 
 ## Project Structure
+bengaluru-house-price-prediction/
+│
+├── data/ # Contains the dataset
+│ ├── raw/ # Raw data
+│ └── processed/ # Processed data for training
+│
+├── model/ # Trained models and model-related scripts
+│ └── saved_model/ # Directory for saving trained models
+│
+├── notebook/ # Jupyter notebooks for analysis and experimentation
+│ └── EDA.ipynb # Exploratory Data Analysis notebook
+│
+├── src/ # Source code for the project
+│ ├── data_preprocessing.py # Scripts for data preprocessing
+│ ├── train_model.py # Script to train the model
+│ └── predict.py # Script to make predictions
+│
+├── templates/ # HTML templates (if applicable)
+│
+├── test/ # Unit tests
+│
+├── .gitignore # Git ignore file
+├── Dockerfile # Dockerfile for containerization
+├── README.md # Project README file
+├── app.py # Main application script
+├── requirements.txt # Python dependencies
+├── result.txt # Sample results file
+└── setup.py # Setup script
+
+
+## Features
+- Data preprocessing
+- Exploratory Data Analysis
+- Model training
+- Prediction script
+- Docker support for containerization
+
+
 
