@@ -43,6 +43,7 @@ This project aims to predict house prices in Bengaluru using machine learning te
     ```
 
 ## Project Structure
+```
 bengaluru-house-price-prediction/
 │
 ├── data/ # Contains the dataset
@@ -71,7 +72,7 @@ bengaluru-house-price-prediction/
 ├── requirements.txt # Python dependencies
 ├── result.txt # Sample results file
 └── setup.py # Setup script
-
+```
 
 ## Features
 - Data preprocessing
